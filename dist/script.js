@@ -932,14 +932,16 @@ module.exports = g;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
- ///////////////////////////////////////
-// Modal window
+
 
 
 var modal = document.querySelector('.modal');
 var overlay = document.querySelector('.overlay');
 var btnCloseModal = document.querySelector('.btn--close-modal');
 var btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+var btnScrollTo = document.querySelector('.btn--scroll-to');
+var section1 = document.querySelector('#section--1'); ///////////////////////////////////////
+// Modal window
 
 var openModal = function openModal(e) {
   e.preventDefault();
@@ -961,6 +963,40 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
   }
+}); ///////////////////////////////////////
+// Page navigation
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault(); // Matching strategy
+
+  if (e.target.classList.contains('nav__link')) {
+    var id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+}); ///////////////////////////////////////
+// Tabbed component
+
+var tabs = document.querySelectorAll('.operations__tab');
+var tabsContainer = document.querySelector('.operations__tab-container');
+var tabsContent = document.querySelectorAll('.operations__content');
+tabsContainer.addEventListener('click', function (e) {
+  var clicked = e.target.closest('.operations__tab'); // Guard clause
+
+  if (!clicked) return; // Remove active classes
+
+  tabs.forEach(function (t) {
+    return t.classList.remove('operations__tab--active');
+  });
+  tabsContent.forEach(function (c) {
+    return c.classList.remove('operations__content--active');
+  }); // Active tab
+
+  clicked.classList.add('operations__tab--active'); // Activate content area
+
+  document.querySelector(".operations__content--".concat(clicked.dataset.tab)).classList.add('operations__content--active');
 });
 
 /***/ })
