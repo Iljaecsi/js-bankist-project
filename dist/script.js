@@ -2948,6 +2948,31 @@ var sectionObserver = new IntersectionObserver(revealSection, {
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
+}); ///////////////////////////////////////
+// Lazy loading images
+
+var imgTargets = document.querySelectorAll('img[data-src]');
+
+var loadImg = function loadImg(entries, observer) {
+  var _entries3 = _slicedToArray(entries, 1),
+      entry = _entries3[0];
+
+  if (!entry.isIntersecting) return; // Replace src with data-src
+
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+  observer.unobserve(entry.target);
+};
+
+var imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px'
+});
+imgTargets.forEach(function (img) {
+  return imgObserver.observe(img);
 });
 
 /***/ })
