@@ -940,7 +940,11 @@ var overlay = document.querySelector('.overlay');
 var btnCloseModal = document.querySelector('.btn--close-modal');
 var btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 var btnScrollTo = document.querySelector('.btn--scroll-to');
-var section1 = document.querySelector('#section--1'); ///////////////////////////////////////
+var section1 = document.querySelector('#section--1');
+var nav = document.querySelector('.nav');
+var tabs = document.querySelectorAll('.operations__tab');
+var tabsContainer = document.querySelector('.operations__tab-container');
+var tabsContent = document.querySelectorAll('.operations__content'); ///////////////////////////////////////
 // Modal window
 
 var openModal = function openModal(e) {
@@ -979,9 +983,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 }); ///////////////////////////////////////
 // Tabbed component
 
-var tabs = document.querySelectorAll('.operations__tab');
-var tabsContainer = document.querySelector('.operations__tab-container');
-var tabsContent = document.querySelectorAll('.operations__content');
 tabsContainer.addEventListener('click', function (e) {
   var clicked = e.target.closest('.operations__tab'); // Guard clause
 
@@ -997,7 +998,25 @@ tabsContainer.addEventListener('click', function (e) {
   clicked.classList.add('operations__tab--active'); // Activate content area
 
   document.querySelector(".operations__content--".concat(clicked.dataset.tab)).classList.add('operations__content--active');
-});
+}); ///////////////////////////////////////
+// Menu fade animation
+
+var handleHover = function handleHover(e) {
+  var _this = this;
+
+  if (e.target.classList.contains('nav__link')) {
+    var link = e.target;
+    var siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    var logo = link.closest('.nav').querySelector('img');
+    siblings.forEach(function (el) {
+      if (el !== link) el.style.opacity = _this;
+    });
+    logo.style.opacity = this;
+  }
+};
+
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+nav.addEventListener('mouseout', handleHover.bind(1));
 
 /***/ })
 
